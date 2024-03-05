@@ -2,17 +2,17 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 
 import traceback
 
 
-TIMEOUT = 5
+TIMEOUT = 10
 RETRIES = 3
-RETRIES_DELAY = 2
+RETRIES_DELAY = 10
 
 
 load_dotenv()
@@ -25,7 +25,7 @@ def get_element_by_xpath(web_driver, pattern):
 
 def wait_for_elements_by_xpath(web_driver, timeout, pattern):
     elements = WebDriverWait(web_driver, timeout).until(
-        EC.visibility_of_all_elements_located((By.XPATH, pattern))
+        expected_conditions.visibility_of_all_elements_located((By.XPATH, pattern))
     )
     return elements
 
@@ -96,3 +96,4 @@ def gather_promptior_context():
         sleep(RETRIES_DELAY)
 
     return promptior_context
+
